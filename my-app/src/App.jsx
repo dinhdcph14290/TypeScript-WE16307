@@ -1,45 +1,29 @@
 import { useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
+import ShowInfo from './components/ShowInfo'
+import Item from './components/Item';
 
 function App() {
-  const [count, setCount] = useState(0)
 
+  const [count, setCount] = useState(0);
+  const [products, setProducts] = useState([
+    {id: 1, name: "Product A"}, // item
+    {id: 2, name: "Product B"}, // item
+    {id: 3, name: "Product C"} // item
+  ])
+  const removeItem = (id) => {
+    const newsProducts = products.filter(item => item.id !== id);
+    setProducts(newsProducts);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+        {products.map((item,index) => <div>{item.name} 
+          <button onClick={() => removeItem(item.id)}>Remove</button></div>
+        )}
+        <ShowInfo name="Dat" age={29}/>
     </div>
   )
+  
 }
-
 export default App
