@@ -14,6 +14,7 @@ import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import AdminLayout from './pages/layouts/AdminLayout';
 
 import "bootstrap/dist/css/bootstrap.min.css"
+import ProductAdd from './pages/ProductAdd';
 
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);  //b1
@@ -74,6 +75,7 @@ function App() {
           <Route index element={<Navigate to="dashboard"/>} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="product" element={<ManagerProduct />} />
+          <Route path="/admin/product/add" element={<ProductAdd />} />
         </Route>
         </Routes>
       </main>
