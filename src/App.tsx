@@ -12,6 +12,8 @@ import ManagerProduct from './pages/ManagerProduct';
 import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import AdminLayout from './pages/layouts/AdminLayout';
 
+import "bootstrap/dist/css/bootstrap.min.css"
+
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [count, setCount] = useState<number>(0);
