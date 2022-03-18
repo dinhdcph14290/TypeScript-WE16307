@@ -3,6 +3,7 @@ import axios from 'axios'
 import logo from './logo.svg'
 import './App.css'
 import ShowInfo from './components/ShowInfo';
+import { list, remove } from './api/product';
 import type {ProductType} from './types/product';
 import { NavLink,Navigate,Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
@@ -15,20 +16,25 @@ import AdminLayout from './pages/layouts/AdminLayout';
 import "bootstrap/dist/css/bootstrap.min.css"
 
 function App() {
-  const [products, setProducts] = useState<ProductType[]>([]);
-  const [count, setCount] = useState<number>(0);
+  const [products, setProducts] = useState<ProductType[]>([]);  //b1
+  // const [count, setCount] = useState<number>(0);
 
-    useEffect(() => {
+    useEffect(() => { // b3
       const getProducts = async () => {
-        const {data} = await axios.get('http://localhost:3000/products');
+        const { data } = await list();
         setProducts(data);
       }
       getProducts();
-    },[])
+  },[])
+
+  const removeItem = async (id: number) => {
+    // xoa tren API
+    const { data } = await remove(id);
+    // reRender
+    data && setProducts(products.filter(item => item._id !== data._id));
+  }
   return (
     <div className="App">
-      {count} <button onClick={() => setCount(count + 1)}>Click</button>
-      <hr />
       {/* <table>
         <thead>
           <th>#</th>
@@ -74,5 +80,8 @@ function App() {
     </div>
   )
 }
-
+//B1: npm i react-router-dom
+//B2: sử dụng component <BrowserRouter> để wrapper <App /> trong file main.tsx
+//B3: Khai báo và sử dụng <Routes> trong app
+//B4: Khai báo sử dụng <Route> để định nghĩa các đường đẫn
 export default App
