@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import logo from './logo.svg'
 import './App.css'
-import ShowInfo from './components/ShowInfo';
-import { list, remove } from './api/product';
+import ShowInfo from './components/ShowInfo'
 import type {ProductType} from './types/product';
+import { add, list, remove } from './api/product'
 import { NavLink,Navigate,Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Product from './pages/Product';
 import Dashboard from './pages/Dashboard';
-import ManagerProduct from './pages/ManagerProduct';
+import ManagerProduct from './pages/ManagerProduct'
 import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import AdminLayout from './pages/layouts/AdminLayout';
 
@@ -17,8 +17,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import ProductAdd from './pages/ProductAdd';
 
 function App() {
-  const [products, setProducts] = useState<ProductType[]>([]);  //b1
-  // const [count, setCount] = useState<number>(0);
+  const [products, setProducts] = useState<ProductType[]>([]); 
 
     useEffect(() => { // b3
       const getProducts = async () => {
@@ -33,6 +32,11 @@ function App() {
     const { data } = await remove(id);
     // reRender
     data && setProducts(products.filter(item => item._id !== data._id));
+  }
+  const onHandleAdd = async (product: ProductType) => {
+    // call api
+    const { data} = await add(product);
+    setProducts([...products, data])
   }
   return (
     <div className="App">
@@ -64,9 +68,6 @@ function App() {
       </header>
       <main>
         <Routes>
-            {/* <Route path="/" element={<h1>Home page</h1>} />
-            <Route path="product" element={<h1>Product page</h1>} />
-            <Route path="about" element={<h1>About page</h1>} /> */}
             <Route path="/" element={<WebsiteLayout/>}>
             <Route index element={<Home />} />
             <Route path="product" element={<Product />} />
@@ -75,7 +76,7 @@ function App() {
           <Route index element={<Navigate to="dashboard"/>} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="product" element={<ManagerProduct />} />
-          <Route path="/admin/product/add" element={<ProductAdd />} />
+          <Route path="/admin/product/add" element={<ProductAdd onAdd={onHandleAdd}/>} />
         </Route>
         </Routes>
       </main>
