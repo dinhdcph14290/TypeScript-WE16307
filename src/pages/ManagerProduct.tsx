@@ -1,10 +1,41 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { ProductType } from '../types/product'
 
-type Props = {}
+type ManagerProductProps = {
+    data: ProductType[],
+    onRemove:(id: number) => void
+}
 
-const ManagerProduct = (props: Props) => {
+
+const ManagerProduct = (props: ManagerProductProps) => {
     return (
-    <div>ManagerProduct</div>
+        <div className='container'>
+        <table className='table table-bordered'>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {props.data && props.data.map((item, index) => {
+                return <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{item.name}</td>
+                        <td>{item.price}</td>
+                        <td>
+                        <Link to={`/admin/product/${item.id}/edit`}>Edit</Link>
+                        <button onClick={() => props.onRemove(item.id)}>Remove</button>
+                        </td>
+                    </tr>
+            })}
+            
+            </tbody>
+</table>
+    </div>
     )
 }
 

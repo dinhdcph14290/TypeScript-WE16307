@@ -27,38 +27,19 @@ function App() {
       getProducts();
   },[])
 
-  const removeItem = async (id: number) => {
+  const onHandleRemove = async (id:number) =>{
     // xoa tren API
-    const { data } = await remove(id);
-    // reRender
-    data && setProducts(products.filter(item => item._id !== data._id));
+    await remove(id);
+    //reRender
+    setProducts(products.filter(item => item.id !== id));
   }
   const onHandleAdd = async (product: ProductType) => {
-    // call api
+    // call API
     const { data} = await add(product);
     setProducts([...products, data])
   }
   return (
     <div className="App">
-      {/* <table>
-        <thead>
-          <th>#</th>
-          <th>Name</th>
-          <th></th>
-        </thead>
-        <tbody>
-          {products.map((item, index) => {
-            return <tr>
-                    <td>{index + 1}</td>
-                    <td>{item.name}</td>
-                    <td>
-                      <button onClick={() => removeItem(item._id)}>Remove</button>
-                    </td>
-                  </tr>
-          })}
-          
-        </tbody>
-      </table> */}
       <header>
         <ul>
           <li><NavLink to="/">Home Page</NavLink></li>
@@ -75,7 +56,7 @@ function App() {
         <Route path="admin" element={<AdminLayout />}> 
           <Route index element={<Navigate to="dashboard"/>} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="product" element={<ManagerProduct />} />
+          <Route path="product" element={<ManagerProduct data={products} onRemove={onHandleRemove}/>} />
           <Route path="/admin/product/add" element={<ProductAdd onAdd={onHandleAdd}/>} />
         </Route>
         </Routes>
@@ -83,8 +64,8 @@ function App() {
     </div>
   )
 }
-//B1: npm i react-router-dom
-//B2: sử dụng component <BrowserRouter> để wrapper <App /> trong file main.tsx
+//B1: npm i react-router-dom react-hook-form
+//B2: Use component <BrowserRouter> for wrapper <App /> in file main.tsx
 //B3: Khai báo và sử dụng <Routes> trong app
 //B4: Khai báo sử dụng <Route> để định nghĩa các đường đẫn
 export default App
