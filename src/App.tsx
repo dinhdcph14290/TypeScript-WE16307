@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import logo from './logo.svg'
+import "antd/dist/antd.variable.min.css";
 import './App.css'
 import ShowInfo from './components/ShowInfo'
 import type {ProductType} from './types/product';
