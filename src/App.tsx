@@ -16,6 +16,11 @@ import AdminLayout from './pages/layouts/AdminLayout';
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import ProductAdd from './pages/ProductAdd';
+import ProductEdit from './pages/ProductEdit';
+import { ConfigProvider } from 'antd';
+import PrivateRouter from './components/PrivateRouter';
+import Signup from './pages/Signup';
+import Signin from './pages/Signin';
 
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]); 
